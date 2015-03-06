@@ -3,6 +3,12 @@ interface iFortnoxAPI
 {
     public function getInvoices();
 }
+/**
+ * FortnoxAPI
+ *
+ * @author     Pavel Petrov <pavel.petrov.wb@gmail.com>
+ * @version    0.1
+ */
 class FortnoxAPI implements iFortnoxAPI
 {
     private $authorizationCode = '';
@@ -22,6 +28,13 @@ class FortnoxAPI implements iFortnoxAPI
         $this->accessToken = $accessToken;
     }
 
+    /**
+     * Sends the request to the Fortnox API
+     * @param  string $requestMethod The request method for the api, valid options are POST, GET, PUT, DELETE
+     * @param  string $entity        The address of the api call without leading slash ( Excluding the API endpoint )
+     * @param  string [$body = null] The request body
+     * @return string The API response
+     */
     private function apiCall ($requestMethod, $entity, $body = null) {
         $curl = curl_init($this->endpoint . $entity);
         $options = array(
@@ -44,11 +57,20 @@ class FortnoxAPI implements iFortnoxAPI
         return $curlResponse;
     }
 
+    /**
+     * Check if an input string is a valid JSON
+     * @param  string $string
+     * @return bool
+     */
     private function isValidJson($string) {
         json_decode($string);
         return (json_last_error() == JSON_ERROR_NONE);
     }
 
+    /**
+     * Check if the API response contains an error and throws the appropriate exception
+     * @param object $object The API response object
+     */
     private function errorCheck($object)
     {
         if( method_exists($object,'ErrorInformation') )
@@ -59,6 +81,11 @@ class FortnoxAPI implements iFortnoxAPI
         }
     }
 
+    /**
+     * Checks if the API response is a valid JSON, checks if it contains errors and parses it into an object
+     * @param  string $string API response string
+     * @return object API response object
+     */
     private function parseResponse($string)
     {
         if($this->isValidJson($string))
@@ -80,6 +107,10 @@ class FortnoxAPI implements iFortnoxAPI
         }
     }
 
+    /**
+     * Requests all invoices
+     * @return array An array of all Invoices
+     */
     public function getInvoices()
     {
         $responseString = $this->apiCall('GET', 'invoices');
