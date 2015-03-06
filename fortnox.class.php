@@ -1,9 +1,9 @@
 <?php
 interface iFortnoxAPI
 {
-
+    public function getInvoices();
 }
-class FortnoxAPI
+class FortnoxAPI implements iFortnoxAPI
 {
     private $authorizationCode = '';
     private $clientSecret = '';
