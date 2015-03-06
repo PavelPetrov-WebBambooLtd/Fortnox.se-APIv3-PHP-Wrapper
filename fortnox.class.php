@@ -20,7 +20,6 @@ class FortnoxAPI
         $this->accepts = $accepts;
         $this->endpoint = $endpoint;
         $this->accessToken = $accessToken;
-        var_dump($this->accessToken, $this->clientSecret, $this->contentType, $this->accepts);
     }
 
     private function apiCall ($requestMethod, $entity, $body = null) {
