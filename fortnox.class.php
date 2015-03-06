@@ -3,11 +3,14 @@ interface iFortnoxAPI
 {
     public function getInvoices();
     public function getInvoice($id);
+    public function createInvoice($invoiceArray);
+    public function updateInvoice($id, $invoiceArray);
+    public function deleteInvoice($id);
 
     public function getCustomers();
     public function getCustomer($id);
-    public function createCustomer($jsonObject);
-    public function updateCustomer($id, $jsonObject);
+    public function createCustomer($customerArray);
+    public function updateCustomer($id, $customerArray);
     public function deleteCustomer($id);
 }
 /**
@@ -170,6 +173,47 @@ class FortnoxAPI implements iFortnoxAPI
     }
 
     /**
+     * Update invoice by ID
+     * @param  int $id         The id of the Invoice
+     * @param  array $invoiceArray
+     * @return mixed  Invoice object or false on error
+     */
+    public function updateInvoice($id, $invoiceArray)
+    {
+        $responseString = $this->apiCall('PUT', 'invoices/'.$id, json_encode($invoiceArray));
+        try
+        {
+            $responseObject = $this->parseResponse($responseString);
+            return $responseObject->Invoice;
+        }
+        catch(Exception $e)
+        {
+            echo 'Can`t parse API response: '.$e->getMessage;
+            return false;
+        }
+    }
+
+    /**
+     * Delete Invoice by id
+     * @param  integer $id The id of the Invoice
+     * @return boolean
+     */
+    public function deleteInvoice($id)
+    {
+        $responseString = $this->apiCall('DELETE', 'invoices/'.$id);
+        try
+        {
+            $responseObject = $this->parseResponse($responseString);
+            return true;
+        }
+        catch(Exception $e)
+        {
+            echo 'Can`t parse API response: '.$e->getMessage;
+            return false;
+        }
+    }
+
+    /**
      * Gets an array of customers
      * @return mixed Array of customers or false on error
      */
@@ -210,7 +254,7 @@ class FortnoxAPI implements iFortnoxAPI
 
     /**
      * Create new customer object
-     * @param  array $customerArray Customer array
+     * @param  array $customerArray
      * @return mixed  The customer object or false on error
      */
     public function createCustomer($customerArray)
@@ -231,7 +275,7 @@ class FortnoxAPI implements iFortnoxAPI
     /**
      * Update customer by ID
      * @param  int $id         The id of the Customer
-     * @param  array $customerArray Customer array
+     * @param  array $customerArray
      * @return mixed  Customer object or false on error
      */
     public function updateCustomer($id, $customerArray)
