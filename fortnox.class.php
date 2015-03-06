@@ -2,6 +2,13 @@
 interface iFortnoxAPI
 {
     public function getInvoices();
+    public function getInvoice($id);
+
+    public function getCustomers();
+    public function getCustomer($id);
+    public function createCustomer($jsonObject);
+    public function updateCustomer($id, $jsonObject);
+    public function deleteCustomer($id);
 }
 /**
  * FortnoxAPI
@@ -109,7 +116,7 @@ class FortnoxAPI implements iFortnoxAPI
 
     /**
      * Requests all invoices
-     * @return array An array of all Invoices
+     * @return mixed An array of all Invoices or false on error
      */
     public function getInvoices()
     {
@@ -122,6 +129,143 @@ class FortnoxAPI implements iFortnoxAPI
         catch(Exception $e)
         {
             echo 'Can`t parse API response: '.$e->getMessage;
+            return false;
+        }
+    }
+
+    /**
+     * Requests an Invoice by ID
+     * @param  integer $id The id of the Invoice that is requested
+     * @return mixed The invoice object or false on error
+     */
+    public function getInvoice($id)
+    {
+        $responseString = $this->apiCall('GET', 'invoices/'.$id);
+        try
+        {
+            $responseObject = $this->parseResponse($responseString);
+            return $responseObject->Invoice;
+        }
+        catch(Exception $e)
+        {
+            echo 'Can`t parse API response: '.$e->getMessage;
+            return false;
+        }
+    }
+
+    public function createInvoice($invoiceArray)
+    {
+        $responseString = $this->apiCall('POST', 'invoices', json_encode($invoiceArray));
+        try
+        {
+            $responseObject = $this->parseResponse($responseString);
+            var_dump($responseObject);
+            return $responseObject->Invoice;
+        }
+        catch(Exception $e)
+        {
+            echo 'Can`t parse API response: '.$e->getMessage;
+            return false;
+        }
+    }
+
+    /**
+     * Gets an array of customers
+     * @return mixed Array of customers or false on error
+     */
+    public function getCustomers()
+    {
+        $responseString = $this->apiCall('GET', 'customers');
+        try
+        {
+            $responseObject = $this->parseResponse($responseString);
+            return $responseObject->Customers;
+        }
+        catch(Exception $e)
+        {
+            echo 'Can`t parse API response: '.$e->getMessage;
+            return false;
+        }
+    }
+
+    /**
+     * Get customer by ID
+     * @param  integer $id The id of the Customer
+     * @return mixed Customer object or false on error
+     */
+    public function getCustomer($id)
+    {
+        $responseString = $this->apiCall('GET', 'customers/'.$id);
+        try
+        {
+            $responseObject = $this->parseResponse($responseString);
+            return $responseObject->Customer;
+        }
+        catch(Exception $e)
+        {
+            echo 'Can`t parse API response: '.$e->getMessage;
+            return false;
+        }
+    }
+
+    /**
+     * Create new customer object
+     * @param  array $customerArray Customer array
+     * @return mixed  The customer object or false on error
+     */
+    public function createCustomer($customerArray)
+    {
+        $responseString = $this->apiCall('POST', 'customers', json_encode($customerArray));
+        try
+        {
+            $responseObject = $this->parseResponse($responseString);
+            return $responseObject->Customer;
+        }
+        catch(Exception $e)
+        {
+            echo 'Can`t parse API response: '.$e->getMessage;
+            return false;
+        }
+    }
+
+    /**
+     * Update customer by ID
+     * @param  int $id         The id of the Customer
+     * @param  array $customerArray Customer array
+     * @return mixed  Customer object or false on error
+     */
+    public function updateCustomer($id, $customerArray)
+    {
+        $responseString = $this->apiCall('PUT', 'customers/'.$id, json_encode($customerArray));
+        try
+        {
+            $responseObject = $this->parseResponse($responseString);
+            return $responseObject->Customer;
+        }
+        catch(Exception $e)
+        {
+            echo 'Can`t parse API response: '.$e->getMessage;
+            return false;
+        }
+    }
+
+    /**
+     * Delete Customer by id
+     * @param  integer $id The id of the Customer
+     * @return boolean
+     */
+    public function deleteCustomer($id)
+    {
+        $responseString = $this->apiCall('DELETE', 'customers/'.$id);
+        try
+        {
+            $responseObject = $this->parseResponse($responseString);
+            return true;
+        }
+        catch(Exception $e)
+        {
+            echo 'Can`t parse API response: '.$e->getMessage;
+            return false;
         }
     }
 
