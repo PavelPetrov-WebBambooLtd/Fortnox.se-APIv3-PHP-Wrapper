@@ -145,7 +145,7 @@ class Customer implements iCustomer {
     protected $emailofferbcc;
     protected $emailoffercc;
     protected $emailorder;
-    protected $emailorderbcc;    public function setCountry($country);
+    protected $emailorderbcc;
     protected $emailordercc;
     protected $fax;
     protected $invoiceadministrationfee;
