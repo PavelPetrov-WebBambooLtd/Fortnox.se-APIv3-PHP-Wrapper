@@ -1,8 +1,7 @@
 <?php
 namespace Fortnox\Model\Customer;
 
-interface iCustomer
-{
+interface iCustomer {
     public function getAddress1();
     public function setAddress1($address1);
     public function getAddress2();
