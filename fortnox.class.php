@@ -1,4 +1,8 @@
 <?php
+namespace Fortnox;
+
+use Fortnox\Model\Customer;
+
 interface iFortnoxAPI
 {
     public function getInvoices();
@@ -257,9 +261,9 @@ class FortnoxAPI implements iFortnoxAPI
      * @param  array $customerArray
      * @return mixed  The customer object or false on error
      */
-    public function createCustomer($customerArray)
+    public function createCustomer(Customer $customer)
     {
-        $responseString = $this->apiCall('POST', 'customers', json_encode($customerArray));
+        $responseString = $this->apiCall('POST', 'customers', $customer);
         try
         {
             $responseObject = $this->parseResponse($responseString);
@@ -278,9 +282,9 @@ class FortnoxAPI implements iFortnoxAPI
      * @param  array $customerArray
      * @return mixed  Customer object or false on error
      */
-    public function updateCustomer($id, $customerArray)
+    public function updateCustomer($id, Customer $customer)
     {
-        $responseString = $this->apiCall('PUT', 'customers/'.$id, json_encode($customerArray));
+        $responseString = $this->apiCall('PUT', 'customers/'.$id, $customer);
         try
         {
             $responseObject = $this->parseResponse($responseString);
