@@ -166,7 +166,6 @@ class Fortnox implements iFortnox
     public function createInvoice(Invoice $invoice)
     {
         $responseString = $this->apiCall('POST', 'invoices', $invoice->__toString());
-        var_dump($invoice->__toString(), $responseString);
         try
         {
             $responseObject = $this->parseResponse($responseString);
@@ -270,7 +269,6 @@ class Fortnox implements iFortnox
         try
         {
             $responseObject = $this->parseResponse($responseString);
-            var_dump($responseObject);
             return $responseObject->Customer;
         }
         catch(Exception $e)
