@@ -2,12 +2,13 @@
 namespace Webbamboo\Fortnox;
 
 use Webbamboo\Fortnox\Model\Customer;
+use Webbamboo\Fortnox\Model\Invoice;
 
 interface iFortnox
 {
     public function getInvoices();
     public function getInvoice($id);
-    public function createInvoice($invoiceArray);
+    public function createInvoice(Invoice $invoice);
     public function updateInvoice($id, $invoiceArray);
     public function deleteInvoice($id);
 
@@ -87,11 +88,13 @@ class Fortnox implements iFortnox
      */
     private function errorCheck($object)
     {
-        if( method_exists($object,'ErrorInformation') )
+        $arrObject = (array)$object;
+        if( isset($arrObject['ErrorInformation']) )
         {
+            $errorInformation = (array)$arrObject['ErrorInformation'];
             //Exception
-            $exceptionMessage = 'Error: ' . $object->ErrorInformation->error . ', Message: ' .$object->ErrorInformation->message . ', Code: ' . $object->ErrorInformation->code;
-            throw new Exception($exceptionMessage, $object->ErrorInformation->code);
+            $exceptionMessage = 'Error: ' . $errorInformation['error'] . ', Message: ' .$errorInformation['message'] . ', Code: ' . $errorInformation['code'];
+            throw new \Exception($exceptionMessage, $errorInformation['code']);
         }
     }
 
@@ -160,9 +163,10 @@ class Fortnox implements iFortnox
         }
     }
 
-    public function createInvoice($invoiceArray)
+    public function createInvoice(Invoice $invoice)
     {
-        $responseString = $this->apiCall('POST', 'invoices', json_encode($invoiceArray));
+        $responseString = $this->apiCall('POST', 'invoices', $invoice->__toString());
+        var_dump($invoice->__toString(), $responseString);
         try
         {
             $responseObject = $this->parseResponse($responseString);

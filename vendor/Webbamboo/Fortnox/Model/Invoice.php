@@ -26,6 +26,8 @@ interface iInvoice {
     public function setCurrencyunit($currencyunit);
     public function getCustomername();
     public function setCustomername($customername);
+    public function getCustomernumber();
+    public function setCustomernumber($customernumber);
     public function getDeliveryaddress1();
     public function setDeliveryaddress1($deliveryaddress1);
     public function getDeliveryaddress2();
@@ -43,9 +45,9 @@ interface iInvoice {
     public function getDuedate();
     public function setDuedate($duedate);
     public function getEdiinformation();
-    public function setEdiinformation($ediinformation);
+    public function setEdiinformation(EDIInformation $ediinformation);
     public function getEmailinformation();
-    public function setEmailinformation($emailinformation);
+    public function setEmailinformation(EmailInformation $emailinformation);
     public function getExternalinvoicereference1();
     public function setExternalinvoicereference1($externalinvoicereference1);
     public function getExternalinvoicereference();
@@ -55,7 +57,7 @@ interface iInvoice {
     public function getInvoicedate();
     public function setInvoicedate($invoicedate);
     public function getInvoicerows();
-    public function setInvoicerows($invoicerows);
+    public function addInvoicerow(InvoiceRow $invoicerow);
     public function getInvoicetype();
     public function getLanguage();
     public function setLanguage($language);
@@ -106,6 +108,7 @@ class Invoice implements iInvoice {
     protected $currencyrate;
     protected $currencyunit;
     protected $customername;
+    protected $customernumber;
     protected $deliveryaddress1;
     protected $deliveryaddress2;
     protected $deliverycity;
@@ -245,6 +248,14 @@ class Invoice implements iInvoice {
 
     public function setCustomername($customername){
         $this->customername = $customername;
+        return $this;
+    }
+
+    public function getCustomernumber(){
+        return $this->customernumber;
+    }
+    public function setCustomernumber($customernumber){
+        $this->customernumber = $customernumber;
         return $this;
     }
 
@@ -544,6 +555,70 @@ class Invoice implements iInvoice {
         $this->zipcode = $zipcode;
         return $this;
     }
+
+    public function __toString()
+    {
+        $fields = array(
+            "AdministrationFee" => $this->getAdministrationfee(),
+            "Address1" => $this->getAddress1(),
+            "Address2" => $this->getAddress2(),
+            "CreditInvoiceReference" => $this->getCreditinvoicereference(),
+            "City" => $this->getCity(),
+            "Comments" => $this->getComments(),
+            "Country" => $this->getCountry(),
+            "CostCenter" => $this->getCostcenter(),
+            "Currency" => $this->getCurrency(),
+            "CurrencyRate" => $this->getCurrencyrate(),
+            "CurrencyUnit" => $this->getCurrencyunit(),
+            "CustomerName" => $this->getCustomername(),
+            "CustomerNumber" => $this->getCustomernumber(),
+            "DeliveryAddress1" => $this->getDeliveryaddress1(),
+            "DeliveryAddress2" => $this->getDeliveryaddress2(),
+            "DeliveryCity" => $this->getDeliverycity(),
+            "DeliveryCountry" => $this->getDeliverycountry(),
+            "DeliveryDate" => $this->getDeliverydate(),
+            "DeliveryZipCode" => $this->getDeliveryzipcode(),
+            "DocumentNumber" => $this->getDocumentnumber(),
+            "DueDate" => $this->getDuedate(),
+            "EDIInformation" => $this->getEdiinformation(),
+            "EmailInformation" => $this->getEmailinformation(),
+            "ExternalInvoiceReference1" => $this->getExternalinvoicereference1(),
+            "ExternalInvoiceReference" => $this->getExternalinvoicereference(),
+            "Freight" => $this->getFreight(),
+            "InvoiceDate" => $this->getInvoicedate(),
+            "InvoiceRows" => $this->getInvoicerows(),
+            "InvoiceType" => $this->getInvoicetype(),
+            "Language" => $this->getLanguage(),
+            "NotCompleted" => $this->getNotcompleted(),
+            "OCR" => $this->getOcr(),
+            "OurReference" => $this->getOurreference(),
+            "Phone1" => $this->getPhone1(),
+            "Phone2" => $this->getPhone2(),
+            "PriceList" => $this->getPricelist(),
+            "PrintTemplate" => $this->getPrinttemplate(),
+            "Project" => $this->getProject(),
+            "Remarks" => $this->getRemarks(),
+            "TermsOfDelivery" => $this->getTermsofdelivery(),
+            "TermsOfPayment" => $this->getTermsofpayment(),
+            "VATIncluded" => $this->getVatincluded(),
+            "WayOfDelivery" => $this->getWayofdelivery(),
+            "YourOrderNumber" => $this->getYourordernumber(),
+            "YourReference" => $this->getYourreference(),
+            "ZipCode" => $this->getZipcode()
+        );
+        $invoice = [
+            "Invoice" => [
+            ]
+        ];
+        foreach($fields as $field => $value)
+        {
+            if(!is_null($value) && !empty($value))
+            {
+                $invoice['Invoice'][$field] = $value;
+            }
+        }
+        return json_encode($invoice);
+    }
 }
 
 class InvoiceRow {
@@ -670,7 +745,7 @@ class InvoiceRow {
 
     public function toArray()
     {
-        $InvoiceRow = [
+        $fields = array(
             "AccountNumber" => $this->getAccountnumber(),
             "ArticleNumber" => $this->getArticlenumber(),
             "CostCenter" => $this->getCostcenter(),
@@ -683,7 +758,17 @@ class InvoiceRow {
             "Project" => $this->getProject(),
             "Unit" => $this->getUnit(),
             "VAT" => $this->getVAT()
+        );
+        $InvoiceRow = [
+
         ];
+        foreach($fields as $field => $value)
+        {
+            if(!is_null($value) && !empty($value))
+            {
+                $InvoiceRow[$field] = $value;
+            }
+        }
         return $InvoiceRow;
     }
 }
