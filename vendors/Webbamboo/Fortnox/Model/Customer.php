@@ -891,68 +891,75 @@ class Customer implements iCustomer {
     }
 
     public function __toString() {
-           $customer = [
-               "Customer" => [
-                   "Address1" => $this->getAddress1(),
-                   "Address2" => $this->getAddress2(),
-                   "City" => $this->getCity(),
-                   "Country" => $this->getCountry(),
-                   "Comments" => $this->getComments(),
-                   "Currency" => $this->getCurrency(),
-                   "CostCenter" => $this->getCostcenter(),
-                   "CountryCode" => $this->getCountrycode(),
-                   "CustomerNumber" => $this->getCustomernumber(),
-                   "DefaultDeliveryTypes" => $this->getDefaultdeliverytypes(),
-                   "DefaultTemplates" => $this->getDefaulttemplates(),
-                   "DeliveryAddress1" => $this->getDeliveryaddress1(),
-                   "DeliveryAddress2" => $this->getDeliveryaddress2(),
-                   "DeliveryCity" => $this->getDeliverycity(),
-                   "DeliveryCountry" => $this->getDeliverycountry(),
-                   "DeliveryCountryCode" => $this->getDeliverycountrycode(),
-                   "DeliveryFax" => $this->getDeliveryfax(),
-                   "DeliveryName" => $this->getDeliveryname(),
-                   "DeliveryPhone1" => $this->getDeliveryphone1(),
-                   "DeliveryPhone2" => $this->getDeliveryphone2(),
-                   "DeliveryZipCode" => $this->getDeliveryzipcode(),
-                   "Email" => $this->getEmail(),
-                   "EmailInvoice" => $this->getEmailinvoice(),
-                   "EmailInvoiceBCC" => $this->getEmailinvoicebcc(),
-                   "EmailInvoiceCC" => $this->getEmailinvoicecc(),
-                   "EmailOffer" => $this->getEmailoffer(),
-                   "EmailOfferBCC" => $this->getEmailofferbcc(),
-                   "EmailOfferCC" => $this->getEmailoffercc(),
-                   "EmailOrder" => $this->getEmailorder(),
-                   "EmailOrderBCC" => $this->getEmailorderbcc(),
-                   "EmailOrderCC" => $this->getEmailordercc(),
-                   "Fax" => $this->getFax(),
-                   "InvoiceAdministrationFee" => $this->getInvoiceadministrationfee(),
-                   "InvoiceDiscount" => $this->getInvoicediscount(),
-                   "InvoiceFreight" => $this->getInvoicefreight(),
-                   "InvoiceRemark" => $this->getInvoiceremark(),
-                   "Name" => $this->getName(),
-                   "OrganisationNumber" => $this->getOrganisationnumber(),
-                   "OurReference" => $this->getOurreference(),
-                   "Phone1" => $this->getPhone1(),
-                   "Phone2" => $this->getPhone2(),
-                   "PriceList" => $this->getPricelist(),
-                   "Project" => $this->getProject(),
-                   "SalesAccount" => $this->getSalesaccount(),
-                   "ShowPriceVATIncluded" => $this->getShowpricevatincluded(),
-                   "TermsOfDelivery" => $this->getTermsofdelivery(),
-                   "TermsOfPayment" => $this->getTermsofpayment(),
-                   "Type" => $this->getType(),
-                   "VATType" => $this->getVattype(),
-                   "VisitingAddress" => $this->getVisitingaddress(),
-                   "VisitingCity" => $this->getVisitingcity(),
-                   "VisitingCountry" => $this->getVisitingcountry(),
-                   "VisitingCountryCode" => $this->getVisitingcountrycode(),
-                   "VisitingZipCode" => $this->getVisitingzipcode(),
-                   "WWW" => $this->getWww(),
-                   "WayOfDelivery" => $this->getWayofdelivery(),
-                   "YourReference" => $this->getYourreference(),
-                   "ZipCode" => getZipcode()
-               ]
-           ];
+        $fields = array(
+           "Address1" => $this->getAddress1(),
+               "Address2" => $this->getAddress2(),
+               "City" => $this->getCity(),
+               "Comments" => $this->getComments(),
+               "Currency" => $this->getCurrency(),
+               "CostCenter" => $this->getCostcenter(),
+               "CountryCode" => $this->getCountrycode(),
+               "CustomerNumber" => $this->getCustomernumber(),
+               "DefaultDeliveryTypes" => $this->getDefaultdeliverytypes(),
+               "DefaultTemplates" => $this->getDefaulttemplates(),
+               "DeliveryAddress1" => $this->getDeliveryaddress1(),
+               "DeliveryAddress2" => $this->getDeliveryaddress2(),
+               "DeliveryCity" => $this->getDeliverycity(),
+               "DeliveryCountryCode" => $this->getDeliverycountrycode(),
+               "DeliveryFax" => $this->getDeliveryfax(),
+               "DeliveryName" => $this->getDeliveryname(),
+               "DeliveryPhone1" => $this->getDeliveryphone1(),
+               "DeliveryPhone2" => $this->getDeliveryphone2(),
+               "DeliveryZipCode" => $this->getDeliveryzipcode(),
+               "Email" => $this->getEmail(),
+               "EmailInvoice" => $this->getEmailinvoice(),
+               "EmailInvoiceBCC" => $this->getEmailinvoicebcc(),
+               "EmailInvoiceCC" => $this->getEmailinvoicecc(),
+               "EmailOffer" => $this->getEmailoffer(),
+               "EmailOfferBCC" => $this->getEmailofferbcc(),
+               "EmailOfferCC" => $this->getEmailoffercc(),
+               "EmailOrder" => $this->getEmailorder(),
+               "EmailOrderBCC" => $this->getEmailorderbcc(),
+               "EmailOrderCC" => $this->getEmailordercc(),
+               "Fax" => $this->getFax(),
+               "InvoiceAdministrationFee" => $this->getInvoiceadministrationfee(),
+               "InvoiceDiscount" => $this->getInvoicediscount(),
+               "InvoiceFreight" => $this->getInvoicefreight(),
+               "InvoiceRemark" => $this->getInvoiceremark(),
+               "Name" => $this->getName(),
+               "OrganisationNumber" => $this->getOrganisationnumber(),
+               "OurReference" => $this->getOurreference(),
+               "Phone1" => $this->getPhone1(),
+               "Phone2" => $this->getPhone2(),
+               "PriceList" => $this->getPricelist(),
+               "Project" => $this->getProject(),
+               "SalesAccount" => $this->getSalesaccount(),
+               "ShowPriceVATIncluded" => $this->getShowpricevatincluded(),
+               "TermsOfDelivery" => $this->getTermsofdelivery(),
+               "TermsOfPayment" => $this->getTermsofpayment(),
+               "Type" => $this->getType(),
+               "VATType" => $this->getVattype(),
+               "VisitingAddress" => $this->getVisitingaddress(),
+               "VisitingCity" => $this->getVisitingcity(),
+               "VisitingCountryCode" => $this->getVisitingcountrycode(),
+               "VisitingZipCode" => $this->getVisitingzipcode(),
+               "WWW" => $this->getWww(),
+               "WayOfDelivery" => $this->getWayofdelivery(),
+               "YourReference" => $this->getYourreference(),
+               "ZipCode" => $this->getZipcode()
+        );
+        $customer = [
+           "Customer" => [
+
+           ]
+        ];
+        foreach($fields as $field => $value)
+        {
+            if(!is_null($value) && !empty($value))
+            {
+                $customer["Customer"][$field] = $value;
+            }
+        }
         return json_encode($customer);
     }
 }
