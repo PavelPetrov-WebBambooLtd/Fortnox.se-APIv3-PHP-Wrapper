@@ -1,9 +1,9 @@
 <?php
-namespace Fortnox;
+namespace Webbamboo\Fortnox;
 
-use Fortnox\Model\Customer;
+use Webbamboo\Fortnox\Model\Customer;
 
-interface iFortnoxAPI
+interface iFortnox
 {
     public function getInvoices();
     public function getInvoice($id);
@@ -13,8 +13,8 @@ interface iFortnoxAPI
 
     public function getCustomers();
     public function getCustomer($id);
-    public function createCustomer($customerArray);
-    public function updateCustomer($id, $customerArray);
+    public function createCustomer(Customer $customer);
+    public function updateCustomer($id, Customer $customer);
     public function deleteCustomer($id);
 }
 /**
@@ -23,7 +23,7 @@ interface iFortnoxAPI
  * @author     Pavel Petrov <pavel.petrov.wb@gmail.com>
  * @version    0.1
  */
-class FortnoxAPI implements iFortnoxAPI
+class Fortnox implements iFortnox
 {
     private $authorizationCode = '';
     private $clientSecret = '';

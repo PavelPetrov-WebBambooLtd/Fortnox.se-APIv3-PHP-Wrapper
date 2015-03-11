@@ -1,5 +1,5 @@
 <?php
-namespace Fortnox\Model\Invoice;
+namespace Webbamboo\Fortnox\Model;
 
 interface iInvoice {
     public function getAdministrationfee();

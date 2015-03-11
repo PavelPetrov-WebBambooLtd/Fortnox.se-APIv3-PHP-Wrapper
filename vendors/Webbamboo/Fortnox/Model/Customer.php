@@ -1,5 +1,5 @@
 <?php
-namespace Fortnox\Model\Customer;
+namespace Webbamboo\Fortnox\Model;
 
 interface iCustomer {
     public function getAddress1();
@@ -166,7 +166,7 @@ class Customer implements iCustomer {
     protected $vattype;
     protected $visitingaddress;
     protected $visitingcity;
-    protected $visitingcountry;CostCenter
+    protected $visitingcountry;
     protected $visitingcountrycode;
     protected $visitingzipcode;
     protected $www;
@@ -406,7 +406,7 @@ class Customer implements iCustomer {
      */
     public function setDeliveryphone2($deliveryphone2){
         $this->deliveryphone2 = $deliveryphone2;
-        return $this;InvoiceFreight
+        return $this;
     }
 
     public function getDeliveryzipcode(){
@@ -603,7 +603,7 @@ class Customer implements iCustomer {
         $this->invoicefreight = $invoicefreight;
         return $this;
     }
-InvoiceFreight
+
     public function getInvoiceremark(){
         return $this->invoiceremark;
     }
@@ -812,8 +812,8 @@ InvoiceFreight
         return $this;
     }
 
-    public function getVisitingcountry(){
-        return $this->visitingcountry;
+    public function getVisitingcountrycode(){
+        return $this->visitingcountrycode;
     }
 
     /**
@@ -890,7 +890,7 @@ InvoiceFreight
         return $this;
     }
 
-    public __toString() {
+    public function __toString() {
            $customer = [
                "Customer" => [
                    "Address1" => $this->getAddress1(),
