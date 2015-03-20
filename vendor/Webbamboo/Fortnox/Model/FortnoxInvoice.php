@@ -59,7 +59,7 @@ interface iInvoice {
     public function getInvoicerows();
     public function addInvoicerow(InvoiceRow $invoicerow);
     public function getInvoicetype();
-    public function setInvoicetype($invoicetype)
+    public function setInvoicetype($invoicetype);
     public function getLanguage();
     public function setLanguage($language);
     public function getNotcompleted();
