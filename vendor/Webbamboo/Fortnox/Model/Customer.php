@@ -114,7 +114,7 @@ interface iCustomer {
     public function setZipcode($zipcode);
 }
 
-class Customer implements iCustomer {
+class FortnoxCustomer implements iCustomer {
     protected $address1;
     protected $address2;
     protected $city;

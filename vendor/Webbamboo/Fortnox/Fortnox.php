@@ -1,21 +1,21 @@
 <?php
 namespace Webbamboo\Fortnox;
 
-use Webbamboo\Fortnox\Model\Customer;
-use Webbamboo\Fortnox\Model\Invoice;
+use Webbamboo\Fortnox\Model\FortnoxCustomer;
+use Webbamboo\Fortnox\Model\FortnoxInvoice;
 
 interface iFortnox
 {
     public function getInvoices();
     public function getInvoice($id);
-    public function createInvoice(Invoice $invoice);
+    public function createInvoice(FortnoxInvoice $invoice);
     public function updateInvoice($id, $invoiceArray);
     public function deleteInvoice($id);
 
     public function getCustomers();
     public function getCustomer($id);
-    public function createCustomer(Customer $customer);
-    public function updateCustomer($id, Customer $customer);
+    public function createCustomer(FortnoxInvoice $customer);
+    public function updateCustomer($id, FortnoxInvoice $customer);
     public function deleteCustomer($id);
 }
 /**
@@ -50,8 +50,8 @@ class Fortnox implements iFortnox
      * @param  string [$body = null] The request body
      * @return string The API response
      */
-    private function apiCall ($requestMethod, $entity, $body = null) {
-        $curl = curl_init($this->endpoint . $entity);
+    private function apiCall ($requestMethod, $entity, $body = null, $filter=null) {
+        $curl = curl_init($this->endpoint . $entity . $filter);
         $options = array(
             'Access-Token: '. $this->accessToken .'',
             'Client-Secret: '. $this->clientSecret .'',
@@ -128,9 +128,9 @@ class Fortnox implements iFortnox
      * Requests all invoices
      * @return mixed An array of all Invoices or false on error
      */
-    public function getInvoices()
+    public function getInvoices($filter=null)
     {
-        $responseString = $this->apiCall('GET', 'invoices');
+        $responseString = $this->apiCall('GET', 'invoices', null, $filter);
         try
         {
             $responseObject = $this->parseResponse($responseString);
@@ -163,7 +163,7 @@ class Fortnox implements iFortnox
         }
     }
 
-    public function createInvoice(Invoice $invoice)
+    public function createInvoice(FortnoxInvoice $invoice)
     {
         $responseString = $this->apiCall('POST', 'invoices', $invoice->__toString());
         try
@@ -263,7 +263,7 @@ class Fortnox implements iFortnox
      * @param  array $customerArray
      * @return mixed  The customer object or false on error
      */
-    public function createCustomer(Customer $customer)
+    public function createCustomer(FortnoxCustomer $customer)
     {
         $responseString = $this->apiCall('POST', 'customers', $customer->__toString());
         try
@@ -284,7 +284,7 @@ class Fortnox implements iFortnox
      * @param  array $customerArray
      * @return mixed  Customer object or false on error
      */
-    public function updateCustomer($id, Customer $customer)
+    public function updateCustomer($id, FortnoxCustomer $customer)
     {
         $responseString = $this->apiCall('PUT', 'customers/'.$id, $customer);
         try

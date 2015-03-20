@@ -59,6 +59,7 @@ interface iInvoice {
     public function getInvoicerows();
     public function addInvoicerow(InvoiceRow $invoicerow);
     public function getInvoicetype();
+    public function setInvoicetype($invoicetype)
     public function getLanguage();
     public function setLanguage($language);
     public function getNotcompleted();
@@ -95,7 +96,7 @@ interface iInvoice {
     public function setZipcode($zipcode);
 }
 
-class Invoice implements iInvoice {
+class FortnoxInvoice implements iInvoice {
     protected $administrationfee;
     protected $address1;
     protected $address2;
